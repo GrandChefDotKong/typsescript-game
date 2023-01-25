@@ -9,6 +9,8 @@ import { PADDLE_SPEED, PADDDLE_WIDTH,
   PADDDLE_HEIGHT, PADDLE_STARTX, BALL_SPEED, 
   BALL_SIZE, BALL_STARTX, BALL_STARTY } from "./setup";
 
+import { createBricks } from "./helpers";
+
 let gameOver = false;
 let score = 0;
 
@@ -23,13 +25,22 @@ function setGameWin(view: CanvasView) {
 }
 
 function gameLoop(
-  view: CanvasView, bricks: Brick[], paddle: Padddle, ball: Ball
+  view: CanvasView, bricks: Brick[]
 ) {
+  view.clear();
+  view.drawBricks(bricks);
 
+  requestAnimationFrame(() => gameLoop(view, bricks));
 }
 
 function startGame(view: CanvasView) {
+  score = 0;
+  view.drawInfo('');
+  view.drawScore(score);
 
+  const bricks = createBricks();
+
+  gameLoop(view, bricks);
 }
 
 

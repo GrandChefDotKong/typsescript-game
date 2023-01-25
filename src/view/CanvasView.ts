@@ -38,13 +38,13 @@ export class CanvasView {
     }
   }
 
-  drawSprite(sprite: Brick | Padddle | Ball): void {
+  drawSprite(sprite: Brick): void {
     if(!sprite) return;
 
     this.context?.drawImage(
       sprite.image,
-      sprite.pos.x,
-      sprite.pos.y,
+      sprite.position.x,
+      sprite.position.y,
       sprite.width,
       sprite.height,
 

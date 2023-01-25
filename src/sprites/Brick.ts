@@ -37,6 +37,27 @@ export class Brick {
   get energy(): number {
     return this.brickEnergy;
   }
+  
+
+  set width(width: number) {
+    this.brickWidth = width;
+  }
+
+  set height(height: number) {
+    this.brickHeight = height;
+  }
+
+  set position(position: Vector) {
+    this.brickPosition = position;
+  }
+
+  set image(image: HTMLImageElement) {
+    this.brickImage = image;
+  }
+
+  set energy(energy: number) {
+    this.brickEnergy = energy;
+  }
 
 
 } 
