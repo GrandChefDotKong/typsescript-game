@@ -1,5 +1,5 @@
 import { Ball } from "../sprites/Ball";
-import { Padddle } from "../sprites/Paddle";
+import { Paddle } from "../sprites/Paddle";
 import { Brick } from "../sprites/Brick";
 
 
@@ -38,7 +38,7 @@ export class CanvasView {
     }
   }
 
-  drawSprite(sprite: Brick): void {
+  drawSprite(sprite: Brick | Paddle): void {
     if(!sprite) return;
 
     this.context?.drawImage(

@@ -1,12 +1,12 @@
 import { CanvasView } from "./view/CanvasView";
 import { Ball } from "./sprites/Ball";
 import { Brick } from "./sprites/Brick";
-import { Padddle } from "./sprites/Paddle";
+import { Paddle } from "./sprites/Paddle";
 
 import PADDLE_IMAGE from './images/paddle.png';
 import BALL_IMAGE from './images/ball.png';
-import { PADDLE_SPEED, PADDDLE_WIDTH, 
-  PADDDLE_HEIGHT, PADDLE_STARTX, BALL_SPEED, 
+import { PADDLE_SPEED, PADDLE_WIDTH, 
+  PADDLE_HEIGHT, PADDLE_STARTX, BALL_SPEED, 
   BALL_SIZE, BALL_STARTX, BALL_STARTY } from "./setup";
 
 import { createBricks } from "./helpers";
@@ -25,12 +25,18 @@ function setGameWin(view: CanvasView) {
 }
 
 function gameLoop(
-  view: CanvasView, bricks: Brick[]
+  view: CanvasView, bricks: Brick[], paddle: Paddle
 ) {
   view.clear();
   view.drawBricks(bricks);
+  view.drawSprite(paddle);
 
-  requestAnimationFrame(() => gameLoop(view, bricks));
+  if((paddle.isMovingLeft && paddle.position.x > 0) || 
+  (paddle.isMovingRight && paddle.position.x < view.canvas.width - paddle.width)) {
+    paddle.movePaddle()
+  }
+
+  requestAnimationFrame(() => gameLoop(view, bricks, paddle));
 }
 
 function startGame(view: CanvasView) {
@@ -39,8 +45,13 @@ function startGame(view: CanvasView) {
   view.drawScore(score);
 
   const bricks = createBricks();
+  const paddle = new Paddle(
+    PADDLE_SPEED, PADDLE_WIDTH, PADDLE_HEIGHT, 
+    { x: PADDLE_STARTX, y: view.canvas.height - PADDLE_HEIGHT - 5}, 
+    PADDLE_IMAGE
+  )
 
-  gameLoop(view, bricks);
+  gameLoop(view, bricks, paddle);
 }
 
 
