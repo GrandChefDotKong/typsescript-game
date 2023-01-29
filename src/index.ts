@@ -12,17 +12,14 @@ import { PADDLE_SPEED, PADDLE_WIDTH,
 
 import { createBricks } from "./helpers";
 
-let gameOver = false;
 let score = 0;
 
 function setGameOver(view: CanvasView) {
-  view.drawInfo("GAME OVER !!");
-  gameOver = false;
+  view.drawInfo("GAME OVER");
 }
 
 function setGameWin(view: CanvasView) {
   view.drawInfo("You WIN !!");
-  gameOver = false;
 }
 
 function gameLoop(
@@ -38,6 +35,14 @@ function gameLoop(
 
   collision.checkBallCollision(ball, paddle, view);
   collision.checkBricksCollision(ball, bricks);
+
+  if(bricks.length === 0) {
+    setGameWin(view);
+  }
+
+  if(ball.position.y + ball.height > view.canvas.height ) {
+    setGameOver(view);
+  }
 
   if((paddle.isMovingLeft && paddle.position.x > 0) || 
   (paddle.isMovingRight && paddle.position.x < view.canvas.width - paddle.width)) {
